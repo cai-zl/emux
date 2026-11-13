@@ -88,6 +88,24 @@ func TestHelpFlagShowsHelp(t *testing.T) {
 	}
 }
 
+func TestExecutePrintsListFailureStderr(t *testing.T) {
+	// ListSessions failing for a non-"no server running" reason must not
+	// die silently: tmux's stderr has to reach the user.
+	r := fakeTmux(t, `echo "tmux: malformed server socket" >&2; exit 2`)
+	var out, errOut strings.Builder
+	a := &app{tmux: r}
+	root := newRootCmd(a)
+	root.SetOut(&out)
+	root.SetErr(&errOut)
+	root.SetArgs([]string{"ls"})
+	if code := execute(root); code != 2 {
+		t.Fatalf("exit code = %d, want 2", code)
+	}
+	if !strings.Contains(errOut.String(), "malformed server socket") {
+		t.Fatalf("tmux stderr was swallowed, got %q", errOut.String())
+	}
+}
+
 func TestExitCodeOf(t *testing.T) {
 	cases := []struct {
 		err  error

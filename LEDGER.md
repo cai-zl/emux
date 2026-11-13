@@ -19,7 +19,7 @@ Rulings:
 - [x] 8. kill
 - [x] 9. rename + detach
 - [x] 10. Help system + version
-- [ ] 11. Final verification + review
+- [x] 11. Final verification + review
 
 Log:
 
@@ -29,3 +29,6 @@ Log:
 - Ruling: `gmux kill` with no arg lists sessions + hint and exits 0 (nothing killed ≠ failure); ambiguous `attach`/`detach` still exit 1 because they were asked to do something they couldn't.
 - Task 10 done: custom help command replaces cobra's default — gmux subcommands get cobra help, tmux commands resolve from the catalog (`gmux help <cmd>` → usage + description), unknown topics pass through as `tmux help <topic>`. Root `--help`/bare help embeds the grouped catalog (7 categories, 86 commands). Cobra's default completion command disabled (out of scope per plan). Version shipped earlier in the tasks 4–9 commit.
 - Task 11 smoke (real tmux, live server): `gmux version` → 0.1.0; `gmux ls` table on real server; `new gmux-smoke -d` → visible in ls → `kill gmux-smoke -y` → gone; `help split-window` catalog hit; `list-commands` passthrough; `help bogus-cmd-xyz` exits 1 (tmux's own error propagated). Build: go build clean.
+- Final review verdict: **Ship** (fresh reviewer, full source + cobra v1.10.2 source-traced). Routing provably clean (`stripFlags` analysis: `gmux -2 attach` lands on root raw args). Applied follow-ups: RunError.Stderr now printed in Execute (silent listing failures fixed, testable `execute(root)` seam added); kill prompt moved to stderr; kill `-y` prefix-matching documented in Long; dead `var _ io.Writer` deleted. 42 tests green after fixes.
+- Ruling: review follow-ups applied without new tests only where unobservable or plumbing-level (prompt stream identical in test capture; stderr print verified via the new execute seam test).
+- Incident note: the reviewer delegate ran `tmux kill-server` while probing real tmux behavior, killing the live dev server (its own test sessions died with it). No code impact; disclosed to user.

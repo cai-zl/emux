@@ -102,17 +102,26 @@ func (a *app) stdin() io.Reader {
 
 // Execute runs gmux and returns the process exit code.
 func Execute() int {
-	root := newRootCmd(defaultApp())
+	return execute(newRootCmd(defaultApp()))
+}
+
+// execute is the testable seam behind Execute.
+func execute(root *cobra.Command) int {
 	err := root.Execute()
 	if err != nil {
-		switch err.(type) {
-		case *tmux.RunError, *quietExit:
+		w := root.ErrOrStderr()
+		switch e := err.(type) {
+		case *tmux.RunError:
+			// Run() failures already printed tmux's own stderr live;
+			// Output()-based failures (session listing) did not.
+			if e.Stderr != "" {
+				fmt.Fprintln(w, e.Stderr)
+			}
+		case *quietExit:
 			// Already spoke for itself on stdout/stderr.
 		default:
-			fmt.Fprintln(os.Stderr, "gmux:", err)
+			fmt.Fprintln(w, "gmux:", err)
 		}
 	}
 	return exitCodeOf(err)
 }
-
-var _ io.Writer = os.Stdout // keep io imported for test-facing stream helpers
