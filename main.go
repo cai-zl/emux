@@ -1,7 +1,11 @@
 package main
 
-import "gmux/cmd"
+import (
+	"os"
+
+	"gmux/cmd"
+)
 
 func main() {
-	cmd.Execute()
+	os.Exit(cmd.Execute())
 }
