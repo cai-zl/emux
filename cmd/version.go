@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const version = "0.1.0"
+var version = "0.1.0"
 
 func printVersion(w io.Writer) {
 	fmt.Fprintf(w, "emux version %s\n", version)
