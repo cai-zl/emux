@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"emux/cmd"
+	"github.com/cai-zl/emux/cmd"
 )
 
 func main() {

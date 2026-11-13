@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"emux/internal/tmux"
+	"github.com/cai-zl/emux/internal/tmux"
 )
 
 // app carries the command's dependencies; swapped in tests.

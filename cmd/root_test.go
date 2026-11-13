@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"emux/internal/tmux"
+	"github.com/cai-zl/emux/internal/tmux"
 )
 
 func fakeTmux(t *testing.T, body string) *tmux.Runner {

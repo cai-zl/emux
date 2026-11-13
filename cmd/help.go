@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"emux/internal/catalog"
+	"github.com/cai-zl/emux/internal/catalog"
 )
 
 // groupedHelp renders the root long help: emux's own commands first, then

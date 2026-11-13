@@ -1,4 +1,4 @@
-module emux
+module github.com/cai-zl/emux
 
 go 1.26
 

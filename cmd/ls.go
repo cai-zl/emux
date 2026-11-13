@@ -8,7 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"emux/internal/tmux"
+	"github.com/cai-zl/emux/internal/tmux"
 )
 
 func newLsCmd(a *app) *cobra.Command {

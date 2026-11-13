@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"emux/internal/tmux"
+	"github.com/cai-zl/emux/internal/tmux"
 )
 
 // fixture tmux that serves session TSV for list-sessions and echoes its
