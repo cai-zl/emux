@@ -1,4 +1,4 @@
-module easymux
+module emux
 
 go 1.26
 

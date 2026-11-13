@@ -7,21 +7,21 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"easymux/internal/catalog"
+	"emux/internal/catalog"
 )
 
-// groupedHelp renders the root long help: easymux's own commands first, then
+// groupedHelp renders the root long help: emux's own commands first, then
 // the embedded tmux catalog grouped by category.
 func groupedHelp() string {
 	var b strings.Builder
-	b.WriteString(`easymux wraps tmux: friendlier common commands, better help, everything else passes straight through to tmux.
+	b.WriteString(`emux wraps tmux: friendlier common commands, better help, everything else passes straight through to tmux.
 
 Common:
-  easymux new [name]         create a session          easymux ls            list sessions
-  easymux attach [name]      attach to a session       easymux kill [name]   kill (asks to confirm)
-  easymux rename <old> <new> rename a session          easymux detach        detach
+  emux new [name]         create a session          emux ls            list sessions
+  emux attach [name]      attach to a session       emux kill [name]   kill (asks to confirm)
+  emux rename <old> <new> rename a session          emux detach        detach
 
-tmux commands (` + "`easymux help <command>`" + ` for details):
+tmux commands (` + "`emux help <command>`" + ` for details):
 `)
 	groups := catalog.ByCategory(catalog.MustLoad())
 	tw := tabwriter.NewWriter(&b, 2, 4, 2, ' ', 0)
@@ -37,13 +37,13 @@ tmux commands (` + "`easymux help <command>`" + ` for details):
 	return b.String()
 }
 
-// newHelpCmd replaces cobra's default help command: easymux subcommands keep
+// newHelpCmd replaces cobra's default help command: emux subcommands keep
 // cobra help, tmux commands resolve from the catalog, unknown topics pass
 // through to tmux's own help.
 func newHelpCmd(a *app) *cobra.Command {
 	return &cobra.Command{
 		Use:   "help [command]",
-		Short: "show help for a easymux or tmux command",
+		Short: "show help for a emux or tmux command",
 		Args:  cobra.ArbitraryArgs,
 		RunE: func(c *cobra.Command, args []string) error {
 			if len(args) == 0 {

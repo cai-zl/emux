@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"easymux/cmd"
+	"emux/cmd"
 )
 
 func main() {

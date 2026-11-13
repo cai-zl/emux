@@ -4,7 +4,7 @@ import (
 	"strings"
 	"testing"
 
-	"easymux/internal/tmux"
+	"emux/internal/tmux"
 )
 
 // fixture tmux that serves session TSV for list-sessions and echoes its
@@ -102,8 +102,8 @@ func TestAttachNoSessionsHints(t *testing.T) {
 	if exitCodeOf(err) != 1 {
 		t.Fatalf("want exit 1, got %v", err)
 	}
-	if !strings.Contains(out, "easymux new") {
-		t.Fatalf("want hint to run easymux new, got %q", out)
+	if !strings.Contains(out, "emux new") {
+		t.Fatalf("want hint to run emux new, got %q", out)
 	}
 }
 
@@ -116,7 +116,7 @@ func TestAttachMultipleListsAndExits(t *testing.T) {
 	if !strings.Contains(out, "work") || !strings.Contains(out, "scratch") {
 		t.Fatalf("multi-attach should list sessions, got %q", out)
 	}
-	if !strings.Contains(out, "easymux attach") {
+	if !strings.Contains(out, "emux attach") {
 		t.Fatalf("want retry hint, got %q", out)
 	}
 	if strings.Contains(tmuxArgs.String(), "attach-session") {
@@ -255,7 +255,7 @@ func TestDetachOutsideNoArgMultipleLists(t *testing.T) {
 	if exitCodeOf(err) != 1 {
 		t.Fatalf("ambiguous detach should exit 1, got %v", err)
 	}
-	if !strings.Contains(out, "work") || !strings.Contains(out, "easymux detach") {
+	if !strings.Contains(out, "work") || !strings.Contains(out, "emux detach") {
 		t.Fatalf("want session list + hint, got %q", out)
 	}
 	if strings.Contains(tmuxArgs.String(), "detach-client") {
@@ -281,7 +281,7 @@ func TestVersionCmd(t *testing.T) {
 	if err != nil {
 		t.Fatalf("version errored: %v", err)
 	}
-	if !strings.Contains(out, "easymux version") {
+	if !strings.Contains(out, "emux version") {
 		t.Fatalf("want version string, got %q", out)
 	}
 }
@@ -292,7 +292,7 @@ func TestVersionFlag(t *testing.T) {
 	if err != nil {
 		t.Fatalf("--version errored: %v", err)
 	}
-	if !strings.Contains(out, "easymux version") {
+	if !strings.Contains(out, "emux version") {
 		t.Fatalf("want version string, got %q", out)
 	}
 	if tmuxArgs.String() != "" {

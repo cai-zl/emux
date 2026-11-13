@@ -8,7 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"easymux/internal/tmux"
+	"emux/internal/tmux"
 )
 
 func newKillCmd(a *app) *cobra.Command {
@@ -29,7 +29,7 @@ func newKillCmd(a *app) *cobra.Command {
 					return nil
 				}
 				printSessions(out, ss)
-				fmt.Fprintln(out, "which one? run: easymux kill <name>")
+				fmt.Fprintln(out, "which one? run: emux kill <name>")
 				return nil
 			}
 			name := args[0]
