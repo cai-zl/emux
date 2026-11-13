@@ -29,7 +29,7 @@ func newRootCmd(a *app) *cobra.Command {
 	root := &cobra.Command{
 		Use:   "gmux",
 		Short: "a friendlier tmux",
-		Long:  "gmux wraps tmux: friendlier common commands, better help, everything else passes straight through to tmux.",
+		Long:  groupedHelp(),
 		// Raw args in, so tmux flags are never intercepted on the
 		// passthrough path.
 		DisableFlagParsing: true,
@@ -49,6 +49,9 @@ func newRootCmd(a *app) *cobra.Command {
 			return a.tmux.Run(args...)
 		},
 	}
+	root.SetHelpCommand(newHelpCmd(a))
+	// Completions were explicitly out of scope for gmux.
+	root.CompletionOptions.DisableDefaultCmd = true
 	root.AddCommand(
 		newLsCmd(a),
 		newNewCmd(a),
