@@ -7,6 +7,7 @@ import (
 func newAttachCmd(a *app) *cobra.Command {
 	return &cobra.Command{
 		Use:   "attach [session]",
+		Aliases: []string{"a"},
 		Short: "attach to a session",
 		Args:  cobra.MaximumNArgs(1),
 		RunE: func(c *cobra.Command, args []string) error {

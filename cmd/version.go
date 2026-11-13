@@ -16,6 +16,7 @@ func printVersion(w io.Writer) {
 func newVersionCmd(a *app) *cobra.Command {
 	return &cobra.Command{
 		Use:   "version",
+		Aliases: []string{"v"},
 		Short: "print the emux version",
 		Args:  cobra.NoArgs,
 		RunE: func(c *cobra.Command, args []string) error {

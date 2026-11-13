@@ -275,6 +275,41 @@ func TestDetachOutsideNoArgNoSessions(t *testing.T) {
 	}
 }
 
+func TestSubcommandAliases(t *testing.T) {
+	t.Setenv("TMUX", "")
+	cases := []struct {
+		name     string
+		args     []string
+		inTmux   bool
+		wantCall string // tmux argv prefix, "" means don't check
+		wantOut  string
+	}{
+		{"n", []string{"n", "work"}, false, "new-session ", ""},
+		{"a", []string{"a", "solo"}, false, "attach-session ", ""},
+		{"k -y", []string{"k", "work", "-y"}, false, "kill-session ", ""},
+		{"d inside", []string{"d"}, true, "detach-client ", ""},
+		{"v", []string{"v"}, false, "", "emux version"},
+	}
+	for _, tc := range cases {
+		if tc.inTmux {
+			t.Setenv("TMUX", "/tmp/emux-test-sock")
+		} else {
+			t.Setenv("TMUX", "")
+		}
+		r, tmuxArgs := newSessionRunner(t, `if [ "$1" = "-V" ]; then echo "tmux 3.5a"; exit 0; fi; printf '%s ' "$@"`)
+		out, err := runRoot(t, r, tc.args...)
+		if err != nil {
+			t.Fatalf("%s errored: %v", tc.name, err)
+		}
+		if tc.wantCall != "" && !strings.HasPrefix(tmuxArgs.String(), tc.wantCall) {
+			t.Fatalf("%s: tmux got %q, want prefix %q", tc.name, tmuxArgs.String(), tc.wantCall)
+		}
+		if tc.wantOut != "" && !strings.Contains(out, tc.wantOut) {
+			t.Fatalf("%s: output missing %q", tc.name, tc.wantOut)
+		}
+	}
+}
+
 func TestVersionCmd(t *testing.T) {
 	r, _ := newSessionRunner(t, `if [ "$1" = "-V" ]; then echo "tmux 3.5a"; exit 0; fi; printf '%s ' "$@"`)
 	out, err := runRoot(t, r, "version")
@@ -301,4 +336,3 @@ func TestVersionFlag(t *testing.T) {
 		t.Fatalf("--version must not call tmux, got %q", tmuxArgs.String())
 	}
 }
-

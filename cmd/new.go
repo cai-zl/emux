@@ -7,6 +7,7 @@ import (
 func newNewCmd(a *app) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "new [name]",
+		Aliases: []string{"n"},
 		Short: "create a new session",
 		Args:  cobra.MaximumNArgs(1),
 		RunE: func(c *cobra.Command, args []string) error {

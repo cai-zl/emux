@@ -14,6 +14,7 @@ import (
 func newKillCmd(a *app) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "kill [session]",
+		Aliases: []string{"k"},
 		Short: "kill a session (asks for confirmation)",
 		Long:  "Kill a tmux session after a [y/N] confirmation. The session name must match exactly; with -y, tmux's own (prefix) target matching applies instead.",
 		Args:  cobra.MaximumNArgs(1),

@@ -10,6 +10,7 @@ import (
 func newDetachCmd(a *app) *cobra.Command {
 	return &cobra.Command{
 		Use:   "detach [session]",
+		Aliases: []string{"d"},
 		Short: "detach the current client, or a named session's clients",
 		Args:  cobra.MaximumNArgs(1),
 		RunE: func(c *cobra.Command, args []string) error {
