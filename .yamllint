@@ -1,0 +1,5 @@
+# usage strings in internal/catalog/catalog.yaml are tmux syntax lines;
+# they are inherently long, so relax the limit repo-wide for data files.
+rules:
+  line-length:
+    max: 200

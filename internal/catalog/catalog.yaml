@@ -1,0 +1,448 @@
+---
+# Static catalog of tmux commands (reflects tmux 3.x).
+# Fields: name, aliases, usage (simplified syntax), description, category.
+# Trade-off of being static: a future tmux release may add or change commands.
+
+# --- Sessions ---
+- name: activate-session
+  aliases: [activate]
+  usage: activate-session
+  description: Activate the least-recently-used session.
+  category: Sessions
+- name: attach-session
+  aliases: [attach]
+  usage: attach-session [-dEMrZ] [-c working-directory] [-f flags] [-s session-name] [-t target-client]
+  description: Attach a client to a session.
+  category: Sessions
+- name: detach-client
+  aliases: [detach]
+  usage: detach-client [-aP] [-s target-session] [-t target-client]
+  description: Detach a client from a session.
+  category: Sessions
+- name: has-session
+  aliases: [has]
+  usage: has-session [-t target-session]
+  description: Check that a session exists; exits 1 if it does not.
+  category: Sessions
+- name: kill-server
+  aliases: []
+  usage: kill-server
+  description: Kill the tmux server, destroying all sessions and clients.
+  category: Sessions
+- name: kill-session
+  aliases: []
+  usage: kill-session [-aC] [-t target-session]
+  description: Destroy a session.
+  category: Sessions
+- name: list-clients
+  aliases: [ls-clients]
+  usage: list-clients [-F format] [-t target-session]
+  description: List all attached clients.
+  category: Sessions
+- name: list-sessions
+  aliases: [ls]
+  usage: list-sessions [-F format] [-f filter]
+  description: List all sessions managed by the server.
+  category: Sessions
+- name: lock-client
+  aliases: [lockc]
+  usage: lock-client [-t target-client]
+  description: Lock a client's terminal.
+  category: Sessions
+- name: lock-server
+  aliases: [lock]
+  usage: lock-server
+  description: Lock all clients connected to the server.
+  category: Sessions
+- name: lock-session
+  aliases: [locks]
+  usage: lock-session [-t target-session]
+  description: Lock all clients attached to a session.
+  category: Sessions
+- name: new-session
+  aliases: [new]
+  usage: new-session [-AdDEPX] [-c start-directory] [-F format] [-n window-name] [-s session-name] [-t group-name] [-x width] [-y height] [shell-command]
+  description: Create a new session, attaching to it when run from a terminal.
+  category: Sessions
+- name: refresh-client
+  aliases: [refresh]
+  usage: refresh-client [-cDLlRSU] [-A pane:] [-B name:] [-d] [-N size] [-t target-client] [adjustment]
+  description: Refresh the current client.
+  category: Sessions
+- name: rename-session
+  aliases: [rename]
+  usage: rename-session [-t target-session] new-name
+  description: Rename a session.
+  category: Sessions
+- name: server-access
+  aliases: []
+  usage: server-access [-adlP] [-p] [-u user]
+  description: Manage per-user access to the tmux server.
+  category: Sessions
+- name: show-messages
+  aliases: []
+  usage: show-messages [-JT] [-t target-client]
+  description: Show server messages and errors, such as those printed at startup.
+  category: Sessions
+- name: start-server
+  aliases: [server]
+  usage: start-server
+  description: Start the tmux server if it is not already running, creating no session.
+  category: Sessions
+- name: suspend-client
+  aliases: [suspendc]
+  usage: suspend-client [-t target-client]
+  description: Suspend a client by sending SIGTSTP to its process.
+  category: Sessions
+- name: switch-client
+  aliases: [switchc]
+  usage: switch-client [-ElnprZ] [-c target-client] [-t target-session | -T key]
+  description: Switch the active client to another session.
+  category: Sessions
+
+# --- Windows ---
+- name: find-window
+  aliases: [findw]
+  usage: find-window [-CiNrTZ] [-C offset] [-F format] [-N count] [-t target-window] match-string
+  description: Search window names, titles and visible content, selecting matches.
+  category: Windows
+- name: kill-window
+  aliases: [killw]
+  usage: kill-window [-a] [-t target-window]
+  description: Destroy a window.
+  category: Windows
+- name: last-window
+  aliases: [last]
+  usage: last-window [-t target-session]
+  description: Return to the previously selected window.
+  category: Windows
+- name: link-window
+  aliases: [linkw]
+  usage: link-window [-abdkL] [-s src-window] [-t dst-window]
+  description: Link an existing window into another session.
+  category: Windows
+- name: list-windows
+  aliases: [lsw]
+  usage: list-windows [-a] [-F format] [-f filter] [-t target-session]
+  description: List the windows of a session.
+  category: Windows
+- name: move-window
+  aliases: [movew]
+  usage: move-window [-abrdk] [-s src-window] [-t dst-window]
+  description: Move a window to another session or index.
+  category: Windows
+- name: new-window
+  aliases: [neww]
+  usage: new-window [-abdkPS] [-c start-directory] [-F format] [-n window-name] [-t target-window] [shell-command]
+  description: Create a new window in the current session.
+  category: Windows
+- name: next-layout
+  aliases: [nextl]
+  usage: next-layout [-t target-window]
+  description: Apply the next pane layout of the window.
+  category: Windows
+- name: next-window
+  aliases: [next]
+  usage: next-window [-a] [-t target-session]
+  description: Move to the next window.
+  category: Windows
+- name: previous-window
+  aliases: [prev]
+  usage: previous-window [-a] [-t target-session]
+  description: Move to the previous window.
+  category: Windows
+- name: rename-window
+  aliases: [renamew]
+  usage: rename-window [-t target-window] new-name
+  description: Rename the current window.
+  category: Windows
+- name: resize-window
+  aliases: [resizew]
+  usage: resize-window [-aADu] [-c] [-t target-window] [-x width] [-y height] [adjustment]
+  description: Resize a window to explicit dimensions.
+  category: Windows
+- name: respawn-window
+  aliases: [respawnw]
+  usage: respawn-window [-k] [-c start-directory] [-e environment] [-t target-window] [shell-command]
+  description: Restart the command running in a window, replacing it.
+  category: Windows
+- name: select-window
+  aliases: [selectw]
+  usage: select-window [-lnpT] [-t target-window]
+  description: Select a window.
+  category: Windows
+- name: swap-window
+  aliases: [swapw]
+  usage: swap-window [-d] [-s src-window] [-t dst-window]
+  description: Swap the positions of two windows.
+  category: Windows
+- name: unlink-window
+  aliases: [unlinkw]
+  usage: unlink-window [-k] [-t target-window]
+  description: Unlink a window from its session.
+  category: Windows
+
+# --- Panes ---
+- name: break-pane
+  aliases: [breakp]
+  usage: break-pane [-abdP] [-F format] [-n window-name] [-s target-pane] [-t target-window]
+  description: Move a pane into its own new window.
+  category: Panes
+- name: capture-pane
+  aliases: [capt]
+  usage: capture-pane [-aAepPqCJN] [-b buffer-name] [-S start-line] [-E end-line] [-t target-pane]
+  description: Capture the visible or scrollback contents of a pane into a buffer.
+  category: Panes
+- name: display-panes
+  aliases: [displayp]
+  usage: display-panes [-bN] [-d duration] [-t target-client] [template]
+  description: Briefly overlay pane numbers and titles on the window.
+  category: Panes
+- name: join-pane
+  aliases: [joinp]
+  usage: join-pane [-bdfhv] [-l size] [-s src-pane] [-t dst-pane]
+  description: Move a pane from one window into another.
+  category: Panes
+- name: kill-pane
+  aliases: [killp]
+  usage: kill-pane [-a] [-t target-pane]
+  description: Destroy a pane.
+  category: Panes
+- name: last-pane
+  aliases: [lastp]
+  usage: last-pane [-deZ] [-t target-window]
+  description: Return to the previously selected pane.
+  category: Panes
+- name: list-panes
+  aliases: [lsp]
+  usage: list-panes [-as] [-F format] [-f filter] [-t target-window]
+  description: List the panes of a window.
+  category: Panes
+- name: move-pane
+  aliases: [movep]
+  usage: move-pane [-bdfhv] [-l size] [-s src-pane] [-t dst-pane]
+  description: Move a pane into another window.
+  category: Panes
+- name: pipe-pane
+  aliases: [pipep]
+  usage: pipe-pane [-IOo] [-t target-pane] [shell-command]
+  description: Pipe all output of a pane to a shell command.
+  category: Panes
+- name: resize-pane
+  aliases: [resizep]
+  usage: resize-pane [-DLMtTUvZ] [-t target-pane] [adjustment]
+  description: Resize a pane.
+  category: Panes
+- name: respawn-pane
+  aliases: [respawnp]
+  usage: respawn-pane [-k] [-c start-directory] [-e environment] [-t target-pane] [shell-command]
+  description: Restart the command running in a pane, replacing it.
+  category: Panes
+- name: rotate-window
+  aliases: [rotatew]
+  usage: rotate-window [-DUZ] [-t target-window]
+  description: Rotate the positions of panes within a window.
+  category: Panes
+- name: select-layout
+  aliases: [selectl]
+  usage: select-layout [-Enop] [-t target-window] [layout-name]
+  description: Select a pane arrangement (layout) for the window.
+  category: Panes
+- name: select-pane
+  aliases: [selectp]
+  usage: select-pane [-DdegLlMmRUvZ] [-T title] [-t target-pane]
+  description: Select a pane; also sets pane titles, styles or borders.
+  category: Panes
+- name: send-keys
+  aliases: [send]
+  usage: send-keys [-FHKlMRX] [-c target-client] [-N repeat-count] [-t target-pane] key ...
+  description: Send key strokes to a pane as if typed.
+  category: Panes
+- name: send-prefix
+  aliases: []
+  usage: send-prefix [-2] [-t target-pane]
+  description: Send the prefix key through to a pane.
+  category: Panes
+- name: split-window
+  aliases: [splitw]
+  usage: split-window [-bdefhIvPZ] [-c start-directory] [-e environment] [-l size] [-t target-pane] [shell-command]
+  description: Split a pane into two panes.
+  category: Panes
+- name: swap-pane
+  aliases: [swapp]
+  usage: swap-pane [-dDUZ] [-s src-pane] [-t dst-pane]
+  description: Swap the positions of two panes.
+  category: Panes
+
+# --- Key Bindings & Menus ---
+- name: bind-key
+  aliases: [bind]
+  usage: bind-key [-nr] [-N note] [-T key-table] key command [arguments]
+  description: Bind a key to run a command, optionally via a key table.
+  category: Key Bindings & Menus
+- name: display-menu
+  aliases: [menu]
+  usage: display-menu [-OM] [-b border] [-c target-client] [-C x,y] [-H heading] [-s style] [-S border-style] [-t target-pane] [-T title] [-x position] [-y position] name key command ...
+  description: Display a menu at the current mouse or cursor position.
+  category: Key Bindings & Menus
+- name: list-keys
+  aliases: [lsk]
+  usage: list-keys [-1aN] [-P prefix-string] [-T key-table] [-F format]
+  description: List all key bindings.
+  category: Key Bindings & Menus
+- name: unbind-key
+  aliases: [unbind]
+  usage: unbind-key [-aq] [-T key-table] key
+  description: Remove a key binding.
+  category: Key Bindings & Menus
+
+# --- Copy Mode & Buffers ---
+- name: choose-buffer
+  aliases: [choosb]
+  usage: choose-buffer [-F format] [-f filter] [-O sort-order] [-Z] [-b buffer-name] [-t target-pane] [template]
+  description: Choose a paste buffer interactively from a list.
+  category: Copy Mode & Buffers
+- name: clear-history
+  aliases: [clearhist]
+  usage: clear-history [-H] [-t target-pane]
+  description: Clear a pane's scrollback history.
+  category: Copy Mode & Buffers
+- name: copy-mode
+  aliases: [copy]
+  usage: copy-mode [-MHu] [-e end-line] [-s start-line] [-S target-pane] [-t target-pane]
+  description: Enter copy mode to scroll through or copy pane content.
+  category: Copy Mode & Buffers
+- name: delete-buffer
+  aliases: [deleteb]
+  usage: delete-buffer [-b buffer-name]
+  description: Remove a paste buffer.
+  category: Copy Mode & Buffers
+- name: list-buffers
+  aliases: [lsb]
+  usage: list-buffers [-F format] [-f filter]
+  description: List paste buffers.
+  category: Copy Mode & Buffers
+- name: load-buffer
+  aliases: [loadb]
+  usage: load-buffer [-w] [-b buffer-name] path
+  description: Load the contents of a file into a paste buffer.
+  category: Copy Mode & Buffers
+- name: paste-buffer
+  aliases: [pasteb]
+  usage: paste-buffer [-dpr] [-b buffer-name] [-s separator] [-t target-pane]
+  description: Insert a paste buffer into a pane.
+  category: Copy Mode & Buffers
+- name: save-buffer
+  aliases: [saveb]
+  usage: save-buffer [-a] [-b buffer-name] path
+  description: Save a paste buffer to a file.
+  category: Copy Mode & Buffers
+- name: set-buffer
+  aliases: [setb]
+  usage: set-buffer [-aw] [-b buffer-name] [-n new-buffer-name] data
+  description: Set the contents of a paste buffer.
+  category: Copy Mode & Buffers
+- name: show-buffer
+  aliases: [showb]
+  usage: show-buffer [-b buffer-name]
+  description: Print a paste buffer to stdout.
+  category: Copy Mode & Buffers
+
+# --- Options & Environment ---
+- name: customize-mode
+  aliases: [customize]
+  usage: customize-mode [-NZ] [-F format] [-f filter] [-t target-pane] [template]
+  description: Browse and edit options interactively.
+  category: Options & Environment
+- name: set-environment
+  aliases: [setenv]
+  usage: set-environment [-Fhgru] [-t target-session] name [value]
+  description: Set or remove an environment variable for a session or the server.
+  category: Options & Environment
+- name: set-hook
+  aliases: []
+  usage: set-hook [-agpRuw] [-t target-pane] hook [command]
+  description: Set or remove a command to run when a tmux event fires.
+  category: Options & Environment
+- name: set-option
+  aliases: [set]
+  usage: set-option [-aFgopqsuUw] [-t target-pane] option [value]
+  description: Set a server, session or window option.
+  category: Options & Environment
+- name: set-window-option
+  aliases: [setw]
+  usage: set-window-option [-aFgoqu] [-t target-window] option [value]
+  description: Set a window option (tmux-compatible alias of set-option -w).
+  category: Options & Environment
+- name: show-environment
+  aliases: [showenv]
+  usage: show-environment [-hgs] [-t target-session] [variable]
+  description: Print the session or server environment.
+  category: Options & Environment
+- name: show-options
+  aliases: [show]
+  usage: show-options [-AgHVqsvw] [-t target-pane] [option]
+  description: Print server, session or window options and their values.
+  category: Options & Environment
+- name: show-window-options
+  aliases: [showw]
+  usage: show-window-options [-gv] [-t target-window] [option]
+  description: Print window options (tmux-compatible alias of show-options -w).
+  category: Options & Environment
+
+# --- Miscellaneous ---
+- name: choose-client
+  aliases: [chooserc]
+  usage: choose-client [-ZNr] [-F format] [-f filter] [-K key] [-O sort-order] [-t target-pane] [template]
+  description: Choose a client interactively from a list.
+  category: Miscellaneous
+- name: choose-tree
+  aliases: [chooset]
+  usage: choose-tree [-GNrZ] [-F format] [-f filter] [-K key] [-O sort-order] [-S style] [-t target-pane] [template]
+  description: Choose sessions or windows interactively from a tree.
+  category: Miscellaneous
+- name: clock-mode
+  aliases: []
+  usage: clock-mode [-t target-pane]
+  description: Display a large clock in a pane.
+  category: Miscellaneous
+- name: command-prompt
+  aliases: []
+  usage: command-prompt [-1FikNpq] [-I inputs] [-p prompts] [-t target-pane] [-T type] [template]
+  description: Prompt the user for a command or other input.
+  category: Miscellaneous
+- name: confirm-before
+  aliases: [confirm]
+  usage: confirm-before [-bcdy] [-p prompt] [-t target-client] command
+  description: Ask for confirmation before running a command.
+  category: Miscellaneous
+- name: display-message
+  aliases: [display]
+  usage: display-message [-aCbvIlNpR] [-c target-client] [-d delay] [-t target-pane] [message]
+  description: Show a message or format-expanded information in the status line.
+  category: Miscellaneous
+- name: display-popup
+  aliases: [popup]
+  usage: display-popup [-BCE] [-b border] [-c target-client] [-d dir] [-h height] [-s style] [-S border-style] [-t target-pane] [-T title] [-w width] [-x position] [-y position] [shell-command]
+  description: Show a command's output in a popup overlay.
+  category: Miscellaneous
+- name: if-shell
+  aliases: [if]
+  usage: if-shell [-bF] [-t target-pane] shell-command command [command]
+  description: Run a command conditionally on a shell command's exit status.
+  category: Miscellaneous
+- name: run-shell
+  aliases: [run]
+  usage: run-shell [-bCNoP] [-c start-directory] [-d delay] [-t target-pane] [shell-command]
+  description: Run a shell command asynchronously, capturing its output.
+  category: Miscellaneous
+- name: source-file
+  aliases: [source]
+  usage: source-file [-Fnqv] [-t target-pane] path ...
+  description: Read and execute commands from a configuration file.
+  category: Miscellaneous
+- name: wait-for
+  aliases: [wait]
+  usage: wait-for [-L | -S | -U] channel
+  description: Block until another wait-for on the same channel wakes it.
+  category: Miscellaneous
