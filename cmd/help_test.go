@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestRootHelpGroupsCatalogCommands(t *testing.T) {
+func TestRootHelpOmitsCatalogAndPointsToHelpTmux(t *testing.T) {
 	// Exit 97: if help ever reaches tmux, this blows up loudly.
 	r, tmuxArgs := newSessionRunner(t, `exit 97`)
 	out, err := runRoot(t, r, "--help")
@@ -15,12 +15,30 @@ func TestRootHelpGroupsCatalogCommands(t *testing.T) {
 	if tmuxArgs.String() != "" {
 		t.Fatalf("--help must not call tmux, got %q", tmuxArgs.String())
 	}
-	for _, want := range []string{
-		"Sessions", "Windows", "split-window", "refresh-client",
-		"emux new", "pass", // grouped catalog + passthrough note
-	} {
+	for _, want := range []string{"emux new", "pass", "help tmux"} {
 		if !strings.Contains(out, want) {
 			t.Fatalf("--help output missing %q", want)
+		}
+	}
+	for _, gone := range []string{"Sessions", "split-window", "refresh-client"} {
+		if strings.Contains(out, gone) {
+			t.Fatalf("--help must not list the tmux catalog, found %q", gone)
+		}
+	}
+}
+
+func TestHelpTmuxShowsCatalog(t *testing.T) {
+	r, tmuxArgs := newSessionRunner(t, `exit 97`)
+	out, err := runRoot(t, r, "help", "tmux")
+	if err != nil {
+		t.Fatalf("help tmux errored: %v", err)
+	}
+	if tmuxArgs.String() != "" {
+		t.Fatalf("help tmux must not call tmux, got %q", tmuxArgs.String())
+	}
+	for _, want := range []string{"Sessions", "split-window", "refresh-client"} {
+		if !strings.Contains(out, want) {
+			t.Fatalf("help tmux output missing %q", want)
 		}
 	}
 }

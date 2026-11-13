@@ -276,13 +276,15 @@ func TestDetachOutsideNoArgNoSessions(t *testing.T) {
 }
 
 func TestVersionCmd(t *testing.T) {
-	r, _ := newSessionRunner(t, `printf '%s ' "$@"`)
+	r, _ := newSessionRunner(t, `if [ "$1" = "-V" ]; then echo "tmux 3.5a"; exit 0; fi; printf '%s ' "$@"`)
 	out, err := runRoot(t, r, "version")
 	if err != nil {
 		t.Fatalf("version errored: %v", err)
 	}
-	if !strings.Contains(out, "emux version") {
-		t.Fatalf("want version string, got %q", out)
+	for _, want := range []string{"emux version", "tmux 3.5a"} {
+		if !strings.Contains(out, want) {
+			t.Fatalf("version output missing %q, got %q", want, out)
+		}
 	}
 }
 

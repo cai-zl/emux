@@ -10,19 +10,25 @@ import (
 	"github.com/cai-zl/emux/internal/catalog"
 )
 
-// groupedHelp renders the root long help: emux's own commands first, then
-// the embedded tmux catalog grouped by category.
+// groupedHelp renders the root long help: emux's own commands only; the
+// embedded tmux catalog lives one step away at `emux help tmux`.
 func groupedHelp() string {
-	var b strings.Builder
-	b.WriteString(`emux wraps tmux: friendlier common commands, better help, everything else passes straight through to tmux.
+	return `emux wraps tmux: friendlier common commands, better help, everything else passes straight through to tmux.
 
 Common:
   emux new [name]         create a session          emux ls            list sessions
   emux attach [name]      attach to a session       emux kill [name]   kill (asks to confirm)
   emux rename <old> <new> rename a session          emux detach        detach
 
-tmux commands (` + "`emux help <command>`" + ` for details):
-`)
+tmux commands: ` + "`emux help tmux`" + ` lists them all, ` + "`emux help <command>`" + ` for details.
+Anything else is passed to tmux verbatim.
+`
+}
+
+// tmuxCatalogHelp renders the embedded tmux command catalog grouped by category.
+func tmuxCatalogHelp() string {
+	var b strings.Builder
+	b.WriteString("tmux commands (details: `emux help <command>`):\n\n")
 	groups := catalog.ByCategory(catalog.MustLoad())
 	tw := tabwriter.NewWriter(&b, 2, 4, 2, ' ', 0)
 	for _, cat := range catalog.CategoryOrder {
@@ -33,7 +39,6 @@ tmux commands (` + "`emux help <command>`" + ` for details):
 		fmt.Fprintln(tw)
 	}
 	tw.Flush()
-	b.WriteString("Anything else is passed to tmux verbatim.\n")
 	return b.String()
 }
 
@@ -48,6 +53,10 @@ func newHelpCmd(a *app) *cobra.Command {
 		RunE: func(c *cobra.Command, args []string) error {
 			if len(args) == 0 {
 				return c.Root().Help()
+			}
+			if args[0] == "tmux" {
+				fmt.Fprint(c.OutOrStdout(), tmuxCatalogHelp())
+				return nil
 			}
 			for _, sub := range c.Root().Commands() {
 				if sub.Name() == args[0] {

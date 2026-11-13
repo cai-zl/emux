@@ -19,7 +19,11 @@ func newVersionCmd(a *app) *cobra.Command {
 		Short: "print the emux version",
 		Args:  cobra.NoArgs,
 		RunE: func(c *cobra.Command, args []string) error {
-			printVersion(c.OutOrStdout())
+			w := c.OutOrStdout()
+			printVersion(w)
+			if v, err := a.tmux.Output("-V"); err == nil && v != "" {
+				fmt.Fprintln(w, v)
+			}
 			return nil
 		},
 	}
