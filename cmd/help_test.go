@@ -17,7 +17,7 @@ func TestRootHelpGroupsCatalogCommands(t *testing.T) {
 	}
 	for _, want := range []string{
 		"Sessions", "Windows", "split-window", "refresh-client",
-		"gmux new", "pass", // grouped catalog + passthrough note
+		"easymux new", "pass", // grouped catalog + passthrough note
 	} {
 		if !strings.Contains(out, want) {
 			t.Fatalf("--help output missing %q", want)
@@ -46,7 +46,7 @@ func TestHelpGmuxSubcommand(t *testing.T) {
 		t.Fatalf("help ls errored: %v", err)
 	}
 	if !strings.Contains(out, "list sessions") {
-		t.Fatalf("help ls should show the gmux subcommand help, got %q", out)
+		t.Fatalf("help ls should show the easymux subcommand help, got %q", out)
 	}
 }
 

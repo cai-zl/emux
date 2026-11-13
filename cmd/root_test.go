@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"gmux/internal/tmux"
+	"easymux/internal/tmux"
 )
 
 func fakeTmux(t *testing.T, body string) *tmux.Runner {
@@ -70,10 +70,10 @@ func TestBareInvocationShowsHelp(t *testing.T) {
 	r := fakeTmux(t, `echo "tmux must not run" >&2; exit 99`)
 	out, err := runRoot(t, r)
 	if err != nil {
-		t.Fatalf("bare gmux errored: %v", err)
+		t.Fatalf("bare easymux errored: %v", err)
 	}
-	if !strings.Contains(out, "Usage:") || !strings.Contains(out, "gmux") {
-		t.Fatalf("bare gmux did not show help: %q", out)
+	if !strings.Contains(out, "Usage:") || !strings.Contains(out, "easymux") {
+		t.Fatalf("bare easymux did not show help: %q", out)
 	}
 }
 

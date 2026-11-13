@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"gmux/cmd"
+	"easymux/cmd"
 )
 
 func main() {

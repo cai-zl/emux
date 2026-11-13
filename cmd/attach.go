@@ -20,12 +20,12 @@ func newAttachCmd(a *app) *cobra.Command {
 			out := c.OutOrStdout()
 			switch {
 			case len(ss) == 0:
-				return sayf(out, 1, "no sessions; create one with: gmux new")
+				return sayf(out, 1, "no sessions; create one with: easymux new")
 			case len(ss) == 1:
 				return a.tmux.Run("attach-session", "-t", ss[0].Name)
 			default:
 				printSessions(out, ss)
-				return sayf(out, 1, "which one? run: gmux attach <name>")
+				return sayf(out, 1, "which one? run: easymux attach <name>")
 			}
 		},
 	}

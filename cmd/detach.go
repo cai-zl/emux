@@ -34,7 +34,7 @@ func newDetachCmd(a *app) *cobra.Command {
 				return a.tmux.Run("detach-client", "-s", ss[0].Name)
 			default:
 				printSessions(out, ss)
-				return sayf(out, 1, "which one? run: gmux detach <name>")
+				return sayf(out, 1, "which one? run: easymux detach <name>")
 			}
 		},
 	}

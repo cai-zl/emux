@@ -7,7 +7,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"gmux/internal/tmux"
+	"easymux/internal/tmux"
 )
 
 // app carries the command's dependencies; swapped in tests.
@@ -27,7 +27,7 @@ func defaultApp() *app {
 
 func newRootCmd(a *app) *cobra.Command {
 	root := &cobra.Command{
-		Use:   "gmux",
+		Use:   "easymux",
 		Short: "a friendlier tmux",
 		Long:  groupedHelp(),
 		// Raw args in, so tmux flags are never intercepted on the
@@ -45,12 +45,12 @@ func newRootCmd(a *app) *cobra.Command {
 				return nil
 			}
 			// Anything that is not a registered subcommand goes to tmux
-			// verbatim, including leading flags like `gmux -2 attach`.
+			// verbatim, including leading flags like `easymux -2 attach`.
 			return a.tmux.Run(args...)
 		},
 	}
 	root.SetHelpCommand(newHelpCmd(a))
-	// Completions were explicitly out of scope for gmux.
+	// Completions were explicitly out of scope for easymux.
 	root.CompletionOptions.DisableDefaultCmd = true
 	root.AddCommand(
 		newLsCmd(a),
@@ -100,7 +100,7 @@ func (a *app) stdin() io.Reader {
 	return a.in
 }
 
-// Execute runs gmux and returns the process exit code.
+// Execute runs easymux and returns the process exit code.
 func Execute() int {
 	return execute(newRootCmd(defaultApp()))
 }
@@ -120,7 +120,7 @@ func execute(root *cobra.Command) int {
 		case *quietExit:
 			// Already spoke for itself on stdout/stderr.
 		default:
-			fmt.Fprintln(w, "gmux:", err)
+			fmt.Fprintln(w, "easymux:", err)
 		}
 	}
 	return exitCodeOf(err)
